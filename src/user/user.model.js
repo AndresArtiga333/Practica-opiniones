@@ -16,6 +16,11 @@ const userSchema = Schema({
         required: [true, "El username es requerido"],
         maxLength: [12, "El username no puede pasar los 12 caracteres"]
     },
+    correo:{
+        type: String,
+        required: [true, "Email is required"],
+        unique: true
+    },
     contra:{
         type: String,
         required: [true, "La contraseña es necesaria"]
@@ -29,6 +34,9 @@ const userSchema = Schema({
     status:{
         type: Boolean,
         default: true
+    },
+    profilePicture:{
+        type: String
     }
 })
 
