@@ -19,7 +19,16 @@ const publicacionesSchema = Schema({
     status:{
         type: Boolean,
         default: true
-    }
+    },
+    comentarios:[{
+        type: Schema.ObjectId,
+        ref: 'Comentarios'
+    }],
+    usuario:{
+        type: Schema.ObjectId,
+        ref: 'Usuarios',
+        required: true
+    },
 })
 
 export default model("Publicaciones", publicacionesSchema)
