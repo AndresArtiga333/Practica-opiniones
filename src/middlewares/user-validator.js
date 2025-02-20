@@ -11,6 +11,7 @@ export const registerValidator = [
     body("correo").notEmpty().withMessage("El correo es requerido"),
     body("correo").isEmail().withMessage("No es un correo válido"),
     body("correo").custom(correoExists),
+    body("username").custom(usernameExists),
     /*body("password").isStrongPassword({
         minLength: 8,
         minLowercase:1,
@@ -26,4 +27,19 @@ export const registerValidator = [
 export const loginValidator = [
     body("correo").optional().isEmail().withMessage("Correo invalido"),
     validarCampos
+]
+
+export const actualizarUsuarioValidator = [
+    validateJWT,
+    hasRoles("CLIENT", "ADMIN"),
+    body("username").custom(usernameExists),
+    validarCampos,
+    handleErrors
+]
+
+export const actualizarContraValidator = [
+    validateJWT,
+    hasRoles("CLIENT", "ADMIN"),
+    validarCampos,
+    handleErrors
 ]

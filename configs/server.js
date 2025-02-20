@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import { dbConnection } from "./mongo.js";
 import authRoutes from "../src/auth/auth.routes.js"
+import userRoutes from "../src/user/user.routes.js"
 
 const middlewares = (app) => {
     app.use(express.urlencoded({extended: false}))
@@ -15,6 +16,7 @@ const middlewares = (app) => {
 
 const routes = async (app) =>{
     app.use("/gestionOpiniones/v1/auth", authRoutes)
+    app.use("/gestionOpiniones/v1/user", userRoutes)
 }
 
 const conectarDB = async () =>{
