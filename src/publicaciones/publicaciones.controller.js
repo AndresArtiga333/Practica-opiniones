@@ -44,14 +44,14 @@ export const actualizarPublicacion = async (req, res) =>{
                 message: "La publicación no existe"
             });
         }
-        if (publicacion.usuario.toString() !== usuario._id.toString()) {
+        if (!publicacion.usuario.equals(usuario._id)) {
             return res.status(403).json({
                 success: false,
-                message: "No tienes permiso para editar esta publicación"
+                message: "No tienes permiso para actualizar esta publicación"
             });
         }
-        const publicacionActualizada = await Usuarios.findOneAndUpdate(
-            pid, {$set: data}, { new: true }
+        const publicacionActualizada = await Publicaciones.findOneAndUpdate(
+            {_id: pid}, {$set: data}, { new: true }
            );
            return res.status(200).json({
                success: true,
@@ -62,6 +62,41 @@ export const actualizarPublicacion = async (req, res) =>{
         return res.status(500).json({
             success: false,
             message: "Error al actualizar la publicacion",
+            error: err.message
+        })
+    }
+}
+
+export const eliminarPublicacion = async (req, res) =>{
+    try{
+        const {usuario} = req;
+        const {pid} = req.params;
+
+        const publicacion = await Publicaciones.findById(pid);
+
+        if (!publicacion) {
+            return res.status(404).json({
+                success: false,
+                message: "La publicación no existe"
+            });
+        };
+        if (!publicacion.usuario.equals(usuario._id)) {
+            return res.status(403).json({
+                success: false,
+                message: "No tienes permiso para eliminar esta publicación"
+            });
+        };
+
+        await Publicaciones.findByIdAndDelete(pid);
+
+        return res.status(200).json({
+            success: true,
+            message: "Publicación eliminada correctamente"
+        });
+    }catch(err){
+        return res.status(500).json({
+            success: false,
+            message: "Error al eliminar la publicacion",
             error: err.message
         })
     }
