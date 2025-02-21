@@ -13,7 +13,7 @@ export const actualizarUsuario = async (req, res) =>{
            if (!usuarioActualizado) {
                return res.status(403).json({
                    success: false,
-                   message: "No se puede editar a los administradores o el usuario no existe"
+                   message: "El usuario no existe"
                });
            }
            return res.status(200).json({
