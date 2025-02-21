@@ -10,3 +10,18 @@ export const agregarComentarioValidator =[
         validarCampos,
         handleErrors
 ]
+
+export const actualizarComentarioValidator =[
+    validateJWT,
+    body("texto").notEmpty().withMessage("El texto es requerido"),
+    param("cid").isMongoId().withMessage("No es un ID válido de MongoDB"),
+    validarCampos,
+    handleErrors
+]
+
+export const eliminarComentarioValidator =[
+    validateJWT,
+    param("cid").isMongoId().withMessage("No es un ID válido de MongoDB"),
+    validarCampos,
+    handleErrors
+]
